@@ -51,7 +51,8 @@
  " stroke-width="5" stroke="#F00" fill="BLACK" opacity="1"/>
 
 <circle cx="0" cy="0" r="1" stroke="blue" fill="blue">
-<animateMotion dur="2s" path ="M429 360 A79 53, 0, 1, 1, 88 197 A40 59, 0 0 1, 100 84 A96 90, 0 0 1, 180 127 A120 30, 0 0 1, 340 128 A100 98, 0 0 1, 448 95 A100 120, 0 0 1, 435 186 A42 100, 0 0 1, 427 360"repeatCount="indefinite" rotate="auto"/>
+<animateMotion dur="2s" path ="M429 360 A79 53, 0, 1, 1, 88 197 A40 59, 0 0 1, 100 84 A96 90, 0 0 1, 180 127 
+A120 30, 0 0 1, 340 128 A100 98, 0 0 1, 448 95 A100 120, 0 0 1, 435 186 A42 100, 0 0 1, 427 360" repeatCount="indefinite" rotate="auto"/>
 <animate attributeName="r" to="40" dur="0.5s" repeatCount="indefinite"/>
 
 </circle>
