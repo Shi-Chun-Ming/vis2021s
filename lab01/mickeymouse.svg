@@ -64,7 +64,7 @@ path="M173 173 A182 200 0 0 1 334 174 A85 85 0 1 1 380 220 A158 158 0 1 1 130 22
   <!-- </defs> -->
 
   <text>
-    <textPath style="font-size:30px;fill:WHITE;stroke:#000001 " href="#MyPath" >
+    <textPath style="font-size:30px;fill:;stroke:#000001 " href="#MyPath" >
 天生萬物以養...人 人無一物以報天,殺!殺!殺!殺..........殺!殺! 十步殺一人，千里不留行 事了拂衣去深藏.........身與名。殺!殺!殺!殺!殺!殺!殺!
     </textPath>
   </text>

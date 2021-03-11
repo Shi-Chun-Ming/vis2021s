@@ -42,10 +42,39 @@
   <path d="M448  0 V512" stroke="lightgray" fill="white"></path>
   <text x="438" y="12" font-size="12" text-anchor="start" fill="red">448</text>
   <text x="492" y="12" font-size="12" text-anchor="start" fill="red">512</text>
-
+   
   <path d="M256 256 V270 V242 M256 256 H270 H242" stroke="black" fill="white"></path>
   
   <text x="254" y="250" font-size="16" text-anchor="middle" fill="red">(256, 256)</text>
+
+<path d="M429 360 A79 53, 0, 1, 1, 88 197 A40 59, 0 0 1, 100 84 A96 90, 0 0 1, 180 127 A120 30, 0 0 1, 340 128 A100 98, 0 0 1, 448 95 A100 120, 0 0 1, 435 186 A42 100, 0 0 1, 427 360
+ " stroke-width="5" stroke="#F00" fill="BLACK" opacity="1"/>
+
+<circle cx="0" cy="0" r="1" stroke="blue" fill="blue">
+<animateMotion dur="2s" path ="M429 360 A79 53, 0, 1, 1, 88 197 A40 59, 0 0 1, 100 84 A96 90, 0 0 1, 180 127 A120 30, 0 0 1, 340 128 A100 98, 0 0 1, 448 95 A100 120, 0 0 1, 435 186 A42 100, 0 0 1, 427 360"repeatCount="indefinite" rotate="auto"/>
+<animate attributeName="r" to="40" dur="0.5s" repeatCount="indefinite"/>
+
+</circle>
+
+<svg viewBox="0 0 510 510" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- to hide the path, it is usually wrapped in a <defs> element -->
+  <!-- <defs> -->
+  <path id="MyPath" fill="none" stroke="red" 
+         d="M429 360 A79 53, 0, 1, 1, 88 197 A40 59, 0 0 1, 100 84 A96 90, 0 0 1, 180 127 A120 30, 0 0 1, 340 128 A100 98, 0 0 1, 448 95 A100 120, 0 0 1, 435 186 A42 100, 0 0 1, 427 360
+ " />
+  <!-- </defs> -->
+
+  <text>
+    <textPath style="font-size:30px;fill:red;stroke:#000001 " href="#MyPath" >
+ 
+    壯士征戰罷 倦枕敵屍眠 夢中猶殺人 笑靨映 ...素輝 三步殺一 人 心停手不 ..停 血流萬里浪...屍枕千尋山。
+
+    </textPath>
+  </text>
+
+</svg>
+
 </svg>
 
     
