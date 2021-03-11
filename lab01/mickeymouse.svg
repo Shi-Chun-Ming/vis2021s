@@ -50,9 +50,9 @@
    <path d="M173 173 A182 200 0 0 1 334 174 A85 85 0 1 1 380 220 A158 158 0 1 1 130 220 A85 85 0 1 1 175 175" stroke-width="3" stroke="#F00" fill="black" opacity="0."/>
 
   <circle cx="0" cy="0" r="10" stroke="WHITE" fill="RED">
-    <animateMotion dur="6s" 
+    <animateMotion dur="3s" 
 path="M173 173 A182 200 0 0 1 334 174 A85 85 0 1 1 380 220 A158 158 0 1 1 130 220 A85 85 0 1 1 175 175"            repeatCount="indefinite" rotate="auto"/>
-    <animate attributeName="r" to="15" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="r" to="50" dur="0.5s" repeatCount="indefinite"/>
   </circle>
 
 <svg viewBox="0 0 510 510" xmlns="http://www.w3.org/2000/svg">
