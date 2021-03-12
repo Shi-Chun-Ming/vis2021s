@@ -76,6 +76,12 @@ A120 30, 0 0 1, 340 128 A100 98, 0 0 1, 448 95 A100 120, 0 0 1, 435 186 A42 100,
 
 </svg>
 
-</svg>
 
-    
+  <circle id="c1" cx="356" cy="256" r="30" stroke="red" fill="red">
+    <animate attributeName="r" to="10" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+ <circle id="c1" cx="156" cy="256" r="30" stroke="red" fill="red">
+    <animate attributeName="r" to="10" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
