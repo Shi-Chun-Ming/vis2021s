@@ -13,8 +13,8 @@
 
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
-  width = 2000 - margin.left - margin.right,
-  height = 1000 - margin.top - margin.bottom;
+  width = 2400 - margin.left - margin.right,
+  height = 1400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -48,8 +48,8 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
 
   // And a opacity scale
   var opacity = d3.scaleLinear()
-    .domain([10, 30])
-    .range([.5,1])
+    .domain([1, 10])
+    .range([.1,1])
 
   // use this information to add rectangles:
   svg
@@ -75,7 +75,7 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
       .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
       .text(function(d){ return "選手:"+d.data.name.replace('mister_','') })
       .attr("font-size", "22px")
-      .attr("fill", "white")
+      .attr("fill", "WHITE")
       
       
   
