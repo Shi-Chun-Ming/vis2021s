@@ -90,7 +90,16 @@ https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
                     .selectAll("td")
                         .data(function(d) { return d; }).enter()
                         .append("td")
-                        .text(function(d) { return d; });
+                        .text(function (d, i) {if ( (d!=null && i < 4) ||(d!=null && d != 1 && d!=0) )  return d;  
+
+                })
+                .filter(function (d, i) { return (i >= 4 && (d==1 | d==0) ); }) 
+                .append("img")
+                .attr("src", function (d, i) { if(d==1)return "./92.png";else if(d==0) return "./93.png"; })
+                .attr("width", 90)
+                .attr("height", 70)
+                ;
+                        
             });
         </script>
     </body>
