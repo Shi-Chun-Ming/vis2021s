@@ -7,16 +7,7 @@
 
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
-<body>
 
-  <div>lab02 treemap</div>
-		<ul>
-			<li>遠距教學授課防疫演練: 2021.03.18 (四) </li>
-			<li>上台報告: 2021.04.01 (四) </li>
-			<li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
-			<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li>
-		</ul>
-</body>
 
 <script>
 
@@ -52,8 +43,8 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
 
   // prepare a color scale
   var color = d3.scaleOrdinal()
-    .domain(["boss1", "boss2", "boss3"])
-    .range([ "#402D54", "#D18975", "#8FD175"])
+    .domain(["boss1", "boss2", "boss3","boss4","boss5"])
+    .range([ "#0215e6", "#5902e6", "#000000", "#13f02d", "#f70727"])
 
   // And a opacity scale
   var opacity = d3.scaleLinear()
@@ -81,9 +72,9 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .enter()
     .append("text")
       .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-      .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-      .text(function(d){ return d.data.name.replace('mister_','') })
-      .attr("font-size", "19px")
+      .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
+      .text(function(d){ return "戰隊-選手:"+d.data.name.replace('mister_','') })
+      .attr("font-size", "32px")
       .attr("fill", "white")
 
   // and to add the text labels
@@ -93,9 +84,9 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .enter()
     .append("text")
       .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-      .attr("y", function(d){ return d.y0+35})    // +20 to adjust position (lower)
-      .text(function(d){ return d.data.value })
-      .attr("font-size", "11px")
+      .attr("y", function(d){ return d.y0+75})    // +20 to adjust position (lower)
+      .text(function(d){ return "MVP次數:"+d.data.value })
+      .attr("font-size", "31px")
       .attr("fill", "white")
 
   // Add title for the 3 groups
@@ -115,7 +106,7 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .append("text")
       .attr("x", 0)
       .attr("y", 14)    // +20 to adjust position (lower)
-      .text("遠距教學授課防疫演練: 2021.03.18 (四) ")
+      .text("英雄聯盟:LPL賽區 2021年春季賽")
       .attr("font-size", "29px")
       .attr("fill",  "blue" )
 
@@ -123,7 +114,7 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .append("text")
       .attr("x", 544)
       .attr("y", 14)    // +20 to adjust position (lower)
-      .text("https://www.d3-graph-gallery.com/graph/treemap_custom.html Treemap customization in d3.js")
+      .text("各路選手MVP次數之TreeMap數據")
       .attr("font-size", "29px")
       .attr("fill",  "blue" )
 
@@ -140,9 +131,9 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .append("text")
       .attr("x", 344)
       .attr("y", 44)    // +20 to adjust position (lower)
-      .text("http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/  D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化 ")
+      .text("109598048徐雋銘 資訊工程系 碩一")
       .attr("font-size", "29px")
-      .attr("fill",  "blue" )
+      .attr("fill",  "red" )
       
       
 
