@@ -73,10 +73,12 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .append("text")
       .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
       .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
-      .text(function(d){ return "戰隊-選手:"+d.data.name.replace('mister_','') })
-      .attr("font-size", "32px")
+      .text(function(d){ return "選手:"+d.data.name.replace('mister_','') })
+      .attr("font-size", "22px")
       .attr("fill", "white")
-
+      
+      
+  
   // and to add the text labels
   svg
     .selectAll("vals")
@@ -86,7 +88,7 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
       .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
       .attr("y", function(d){ return d.y0+75})    // +20 to adjust position (lower)
       .text(function(d){ return "MVP次數:"+d.data.value })
-      .attr("font-size", "31px")
+      .attr("font-size", "28px")
       .attr("fill", "white")
 
   // Add title for the 3 groups
