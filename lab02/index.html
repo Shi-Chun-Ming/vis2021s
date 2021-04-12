@@ -5,12 +5,158 @@
 <!-- Load d3.js -->
 <script src="https://d3js.org/d3.v4.js"></script>
 
+<select name="number" id="number" onchange="print_value();">
+  <option value="1">MVP次數</option>
+  <option value="2">場均擊殺率</option>
+  <option value="3">場均金錢</option>
+  <option value="4">出場次數</option>
+  </select>
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
 
 
-<script>
 
+
+  
+
+<script>
+  // set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+  width = 2700 - margin.left - margin.right,
+  height = 1400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+.append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+.append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+// read json data
+d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dendrogram_full.json", function(data) {
+
+  // Give the data to this cluster layout:
+  var root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+
+  // Then d3.treemap computes the position of each element of the hierarchy
+  d3.treemap()
+    .size([width, height])
+    .paddingTop(48)
+    .paddingRight(7)
+    .paddingInner(3)      // Padding between each rectangle
+    //.paddingOuter(6)
+    //.padding(20)
+    (root)
+
+  // prepare a color scale
+  var color = d3.scaleOrdinal()
+    .domain(["boss1", "boss2", "boss3","boss4","boss5"])
+    .range([ "#0215e6", "#5902e6", "#000000", "#13f02d", "#f70727"])
+
+  // And a opacity scale
+  var opacity = d3.scaleLinear()
+    .domain([1, 10])
+    .range([.1,1])
+
+  // use this information to add rectangles:
+  svg
+    .selectAll("rect")
+    .data(root.leaves())
+    .enter()
+    .append("rect")
+      .attr('x', function (d) { return d.x0; })
+      .attr('y', function (d) { return d.y0; })
+      .attr('width', function (d) { return d.x1 - d.x0; })
+      .attr('height', function (d) { return d.y1 - d.y0; })
+      .style("stroke", "black")
+      .style("fill", function(d){ return color(d.parent.data.name)} )
+      .style("opacity", function(d){ return opacity(d.data.value)})
+
+  // and to add the text labels
+  svg
+    .selectAll("text")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
+      .text(function(d){ return "選手:"+d.data.name.replace('mister_','') })
+      .attr("font-size", "22px")
+      .attr("fill", "WHITE")
+      
+      
+  
+  // and to add the text labels
+  svg
+    .selectAll("vals")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+75})    // +20 to adjust position (lower)
+      .text(function(d){ return "MVP次數:"+d.data.value })
+      .attr("font-size", "28px")
+      .attr("fill", "white")
+
+  // Add title for the 3 groups
+  svg
+    .selectAll("titles")
+    .data(root.descendants().filter(function(d){return d.depth==1}))
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0})
+      .attr("y", function(d){ return d.y0+21})
+      .text(function(d){ return d.data.name })
+      .attr("font-size", "19px")
+      .attr("fill",  function(d){ return color(d.data.name)} )
+
+  // Add title for the 3 groups
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("英雄聯盟:頂級職業聯賽LPL賽區 2021年春季賽")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 600)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("各路選手MVP次數之TreeMap數據-前40名")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("上台報告: 2021.04.01 (四) ")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 344)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("109598048徐雋銘 資訊工程系 碩一")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+      
+      
+
+})
+  function print_value() {
+   	
+
+
+if(document.getElementById("number").value=="1")
+{
+    	
+  document.getElementById("my_dataviz").innerHTML="";
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
   width = 2700 - margin.left - margin.right,
@@ -108,13 +254,13 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
     .append("text")
       .attr("x", 0)
       .attr("y", 14)    // +20 to adjust position (lower)
-      .text("英雄聯盟:LPL賽區 2021年春季賽")
+      .text("英雄聯盟:頂級職業聯賽LPL賽區 2021年春季賽")
       .attr("font-size", "29px")
       .attr("fill",  "blue" )
 
       svg
     .append("text")
-      .attr("x", 544)
+      .attr("x", 600)
       .attr("y", 14)    // +20 to adjust position (lower)
       .text("各路選手MVP次數之TreeMap數據-前40名")
       .attr("font-size", "29px")
@@ -140,4 +286,457 @@ d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/data_dend
       
 
 })
+}
+
+
+
+if(document.getElementById("number").value=="2")
+{
+    	
+  document.getElementById("my_dataviz").innerHTML="";
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+  width = 2700 - margin.left - margin.right,
+  height = 1400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+.append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+.append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+// read json data
+d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/KillEveryGame.json", function(data) {
+
+  // Give the data to this cluster layout:
+  var root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+
+  // Then d3.treemap computes the position of each element of the hierarchy
+  d3.treemap()
+    .size([width, height])
+    .paddingTop(48)
+    .paddingRight(7)
+    .paddingInner(3)      // Padding between each rectangle
+    //.paddingOuter(6)
+    //.padding(20)
+    (root)
+
+  // prepare a color scale
+  var color = d3.scaleOrdinal()
+    .domain(["boss1", "boss2", "boss3","boss4","boss5"])
+    .range([ "#0215e6", "#5902e6", "#000000", "#13f02d", "#f70727"])
+
+  // And a opacity scale
+  var opacity = d3.scaleLinear()
+    .domain([0, 6])
+    .range([.1,1])
+
+  // use this information to add rectangles:
+  svg
+    .selectAll("rect")
+    .data(root.leaves())
+    .enter()
+    .append("rect")
+      .attr('x', function (d) { return d.x0; })
+      .attr('y', function (d) { return d.y0; })
+      .attr('width', function (d) { return d.x1 - d.x0; })
+      .attr('height', function (d) { return d.y1 - d.y0; })
+      .style("stroke", "black")
+      .style("fill", function(d){ return color(d.parent.data.name)} )
+      .style("opacity", function(d){ return opacity(d.data.value)})
+
+  // and to add the text labels
+  svg
+    .selectAll("text")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
+      .text(function(d){ return "選手:"+d.data.name.replace('mister_','') })
+      .attr("font-size", "22px")
+      .attr("fill", "WHITE")
+      
+      
+  
+  // and to add the text labels
+  svg
+    .selectAll("vals")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+75})    // +20 to adjust position (lower)
+      .text(function(d){ return "場均擊殺數:"+d.data.value })
+      .attr("font-size", "28px")
+      .attr("fill", "white")
+
+  // Add title for the 3 groups
+  svg
+    .selectAll("titles")
+    .data(root.descendants().filter(function(d){return d.depth==1}))
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0})
+      .attr("y", function(d){ return d.y0+21})
+      .text(function(d){ return d.data.name })
+      .attr("font-size", "19px")
+      .attr("fill",  function(d){ return color(d.data.name)} )
+
+  // Add title for the 3 groups
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("英雄聯盟:頂級職業聯賽LPL賽區 2021年春季賽")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 600)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("各路選手")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 715)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("場均擊殺數")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+    
+      svg
+    .append("text")
+      .attr("x", 860)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("之TreeMap數據-前40名")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("上台報告: 2021.04.01 (四) ")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 344)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("109598048徐雋銘 資訊工程系 碩一")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+      
+      
+
+})
+}
+
+if(document.getElementById("number").value=="3"){
+  document.getElementById("my_dataviz").innerHTML="";
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+  width = 2700 - margin.left - margin.right,
+  height = 1400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+.append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+.append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+// read json data
+d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/gold.json", function(data) {
+
+  // Give the data to this cluster layout:
+  var root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+
+  // Then d3.treemap computes the position of each element of the hierarchy
+  d3.treemap()
+    .size([width, height])
+    .paddingTop(48)
+    .paddingRight(7)
+    .paddingInner(3)      // Padding between each rectangle
+    //.paddingOuter(6)
+    //.padding(20)
+    (root)
+
+  // prepare a color scale
+  var color = d3.scaleOrdinal()
+    .domain(["boss1", "boss2", "boss3","boss4","boss5"])
+    .range([ "#0215e6", "#5902e6", "#000000", "#13f02d", "#f70727"])
+
+  // And a opacity scale
+  var opacity = d3.scaleLinear()
+    .domain([11000, 15000])
+    .range([.1,1])
+
+  // use this information to add rectangles:
+  svg
+    .selectAll("rect")
+    .data(root.leaves())
+    .enter()
+    .append("rect")
+      .attr('x', function (d) { return d.x0; })
+      .attr('y', function (d) { return d.y0; })
+      .attr('width', function (d) { return d.x1 - d.x0; })
+      .attr('height', function (d) { return d.y1 - d.y0; })
+      .style("stroke", "black")
+      .style("fill", function(d){ return color(d.parent.data.name)} )
+      .style("opacity", function(d){ return opacity(d.data.value)})
+
+  // and to add the text labels
+  svg
+    .selectAll("text")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
+      .text(function(d){ return "選手:"+d.data.name.replace('mister_','') })
+      .attr("font-size", "22px")
+      .attr("fill", "WHITE")
+      
+      
+  
+  // and to add the text labels
+  svg
+    .selectAll("vals")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+75})    // +20 to adjust position (lower)
+      .text(function(d){ return "場均金錢:"+d.data.value })
+      .attr("font-size", "28px")
+      .attr("fill", "white")
+
+  // Add title for the 3 groups
+  svg
+    .selectAll("titles")
+    .data(root.descendants().filter(function(d){return d.depth==1}))
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0})
+      .attr("y", function(d){ return d.y0+21})
+      .text(function(d){ return d.data.name })
+      .attr("font-size", "19px")
+      .attr("fill",  function(d){ return color(d.data.name)} )
+
+  // Add title for the 3 groups
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("英雄聯盟:頂級職業聯賽LPL賽區 2021年春季賽")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 600)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("各路選手")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 715)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("場均金錢")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+    
+      svg
+    .append("text")
+      .attr("x", 828)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("之TreeMap數據-前40名")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("上台報告: 2021.04.01 (四) ")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 344)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("109598048徐雋銘 資訊工程系 碩一")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+      
+      
+
+})
+}
+
+if(document.getElementById("number").value=="4"){
+  document.getElementById("my_dataviz").innerHTML="";
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+  width = 2700 - margin.left - margin.right,
+  height = 1400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+.append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+.append("g")
+  .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+// read json data
+d3.json("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/appear.json", function(data) {
+
+  // Give the data to this cluster layout:
+  var root = d3.hierarchy(data).sum(function(d){ return d.value}) // Here the size of each leave is given in the 'value' field in input data
+
+  // Then d3.treemap computes the position of each element of the hierarchy
+  d3.treemap()
+    .size([width, height])
+    .paddingTop(48)
+    .paddingRight(7)
+    .paddingInner(3)      // Padding between each rectangle
+    //.paddingOuter(6)
+    //.padding(20)
+    (root)
+
+  // prepare a color scale
+  var color = d3.scaleOrdinal()
+    .domain(["boss1", "boss2", "boss3","boss4","boss5"])
+    .range([ "#0215e6", "#5902e6", "#000000", "#13f02d", "#f70727"])
+
+  // And a opacity scale
+  var opacity = d3.scaleLinear()
+    .domain([10, 50])
+    .range([.1,1])
+
+  // use this information to add rectangles:
+  svg
+    .selectAll("rect")
+    .data(root.leaves())
+    .enter()
+    .append("rect")
+      .attr('x', function (d) { return d.x0; })
+      .attr('y', function (d) { return d.y0; })
+      .attr('width', function (d) { return d.x1 - d.x0; })
+      .attr('height', function (d) { return d.y1 - d.y0; })
+      .style("stroke", "black")
+      .style("fill", function(d){ return color(d.parent.data.name)} )
+      .style("opacity", function(d){ return opacity(d.data.value)})
+
+  // and to add the text labels
+  svg
+    .selectAll("text")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+40})    // +20 to adjust position (lower)
+      .text(function(d){ return "選手:"+d.data.name.replace('mister_','') })
+      .attr("font-size", "22px")
+      .attr("fill", "WHITE")
+      
+      
+  
+  // and to add the text labels
+  svg
+    .selectAll("vals")
+    .data(root.leaves())
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+      .attr("y", function(d){ return d.y0+75})    // +20 to adjust position (lower)
+      .text(function(d){ return "出場次數:"+d.data.value })
+      .attr("font-size", "28px")
+      .attr("fill", "white")
+
+  // Add title for the 3 groups
+  svg
+    .selectAll("titles")
+    .data(root.descendants().filter(function(d){return d.depth==1}))
+    .enter()
+    .append("text")
+      .attr("x", function(d){ return d.x0})
+      .attr("y", function(d){ return d.y0+21})
+      .text(function(d){ return d.data.name })
+      .attr("font-size", "19px")
+      .attr("fill",  function(d){ return color(d.data.name)} )
+
+  // Add title for the 3 groups
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("英雄聯盟:頂級職業聯賽LPL賽區 2021年春季賽")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 600)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("各路選手")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 715)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("出場次數")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+    
+      svg
+    .append("text")
+      .attr("x", 827)
+      .attr("y", 14)    // +20 to adjust position (lower)
+      .text("之TreeMap數據-前40名")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+
+  svg
+    .append("text")
+      .attr("x", 0)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("上台報告: 2021.04.01 (四) ")
+      .attr("font-size", "29px")
+      .attr("fill",  "blue" )
+
+      svg
+    .append("text")
+      .attr("x", 344)
+      .attr("y", 44)    // +20 to adjust position (lower)
+      .text("109598048徐雋銘 資訊工程系 碩一")
+      .attr("font-size", "29px")
+      .attr("fill",  "red" )
+      
+      
+
+})
+}
+  }
 </script>
