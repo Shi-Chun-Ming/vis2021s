@@ -9,12 +9,13 @@
     	
     	div.bar {
     		border: 1px black solid;
-    		padding: 10px;
+    		padding: 15px;
     		margin: 5px 10px 5px 10px;
     		display: inline-block;
-    		width: 20px;
+    		width: 30px;
     		height: 75px;
-    		background-color: cyan;
+    		background-color:yellow;
+			vertical-align: bottom;
     	}
 
     	body {
@@ -26,10 +27,9 @@
 </head>
 <body>
 
-
+     
     <script type="text/javascript">
       // Your beautiful D3 code will go here
-
       d3.text("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/lab05.csv", function(data){
 		  var parsedCSV=d3.csv.parseRows(data);
 
@@ -45,9 +45,16 @@
 		  .attr("class","bar")
 		  .style("height",function(d)
 		  {       
-			     console.log(d);
+			     console.log(d); 
                   return d[1]+'px';
-		  });
+				  
+		  })
+		  .append("text")
+           .text(function(d) {
+         return "("+ d[0] + "," + d[1] + ")";
+         })
+		  
+		  
 
       	
       });
