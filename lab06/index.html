@@ -1,11 +1,3 @@
-<!--
-  https://blockbuilder.org/guilhermesimoes/8913c15adf7dd2cab53a
-  
-  http://bl.ocks.org/mstanaland/6100713
-
-  https://www.d3-graph-gallery.com/graph/barplot_stacked_basicWide.html
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,11 +15,11 @@
     fill: none;
     stroke: #000;
   }
- 
+
   path.domain {
     stroke: none;
   }
- 
+
   .y .tick line {
     stroke: #ddd;
   }
@@ -39,10 +31,10 @@
 
 // Setup svg using Bostock's margin convention
 
-var margin = {top: 20, right: 160, bottom: 35, left: 30};
+var margin = {top: 20, right: 60, bottom: 35, left: 30};
 
-var width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var width = 2000 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
 
 var svg = d3.select("body")
   .append("svg")
@@ -50,6 +42,7 @@ var svg = d3.select("body")
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
 
 /* Data in strings like it would be if imported from a csv */
@@ -68,16 +61,17 @@ var data = [
   { year: "2016", redDelicious: "19", mcintosh: "17", oranges: "5", pears: "7" },
 ];
 
+
 var parse = d3.time.format("%Y").parse;
 
+var datas = [];
 
-// Transpose the data into layers
-var dataset = d3.layout.stack()(["redDelicious", "mcintosh", "oranges", "pears"].map(function(fruit) {
-  return data.map(function(d) {
-    return {x: parse(d.year), y: +d[fruit]};
-  });
-}));
-
+var text = d3.text("https://raw.githubusercontent.com/Shi-Chun-Ming/Self/gh-pages/lab06.csv", function(data){
+  var Myparse =  d3.csv.parseRows(data);
+  Myparse.forEach(function(item, index){
+    if(index != 0){datas.push({index:index-1,chinese:item[0],english:item[1],france:item[2],german:item[3],japan:item[4],type1:item[5],type2:item[6]})} });
+  datas = Object.values(datas);
+  var dataset = d3.layout.stack()(["chinese", "english", "france", "german", "japan"].map(function(type) {return datas.map(function(d) {return {x: d.index, y: +d[type]};});}));
 
 // Set x, y and colors
 var x = d3.scale.ordinal()
@@ -88,33 +82,38 @@ var y = d3.scale.linear()
   .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.y0 + d.y; });  })])
   .range([height, 0]);
 
-var colors = ["b33040", "#d25c4d", "#f2b447", "#d9d574"];
+var colors = ["#5dfd0b", "#9600ff", "#0004ff", "#ff00ce", "#00ecff"];
 
 
 // Define and draw axes
 var yAxis = d3.svg.axis()
   .scale(y)
   .orient("left")
-  .ticks(5)
+  .ticks(25)
   .tickSize(-width, 0, 0)
   .tickFormat( function(d) { return d } );
 
 var xAxis = d3.svg.axis()
   .scale(x)
   .orient("bottom")
-  .tickFormat(d3.time.format("%Y"));
 
 svg.append("g")
   .attr("class", "y axis")
-  .call(yAxis);
+  .call(yAxis)
+  .style("fill", d3.rgb("red"))
+  .attr("font-size", 20 + "px");
 
 svg.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
-  .call(xAxis);
+  .call(xAxis)
+  .selectAll("text")
+  .attr("transform", "translate(-10,10)rotate(-65)")
+  .style("fill", d3.rgb("blue"))
+  .attr("font-size", 10 + "px");
 
 
-// Create groups for each series, rects for each segment 
+// Create groups for each series, rects for each segment
 var groups = svg.selectAll("g.cost")
   .data(dataset)
   .enter().append("g")
@@ -138,31 +137,31 @@ var rect = groups.selectAll("rect")
     tooltip.select("text").text(d.y);
   });
 
-
 // Draw legend
 var legend = svg.selectAll(".legend")
   .data(colors)
   .enter().append("g")
   .attr("class", "legend")
   .attr("transform", function(d, i) { return "translate(30," + i * 19 + ")"; });
- 
+
 legend.append("rect")
-  .attr("x", width - 18)
-  .attr("width", 18)
-  .attr("height", 18)
+  .attr("x", width - 50)
+  .attr("width", 50)
+  .attr("height", 30)
   .style("fill", function(d, i) {return colors.slice().reverse()[i];});
- 
+
 legend.append("text")
   .attr("x", width + 5)
   .attr("y", 9)
   .attr("dy", ".35em")
   .style("text-anchor", "start")
-  .text(function(d, i) { 
+  .text(function(d, i) {
     switch (i) {
-      case 0: return "Anjou pears";
-      case 1: return "Naval oranges";
-      case 2: return "McIntosh apples";
-      case 3: return "Red Delicious apples";
+      case 0: return "國語";
+      case 1: return "英語";
+      case 2: return "法語";
+      case 3: return "德語";
+      case 4: return "日語";
     }
   });
 
@@ -171,7 +170,7 @@ legend.append("text")
 var tooltip = svg.append("g")
   .attr("class", "tooltip")
   .style("display", "none");
-    
+
 tooltip.append("rect")
   .attr("width", 30)
   .attr("height", 20)
@@ -182,10 +181,9 @@ tooltip.append("text")
   .attr("x", 15)
   .attr("dy", "1.2em")
   .style("text-anchor", "middle")
-  .attr("font-size", "12px")
+  .attr("font-size", "16px")
   .attr("font-weight", "bold");
-
+})
 </script>
 </body>
 </html>
-  
