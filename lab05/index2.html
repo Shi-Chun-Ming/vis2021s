@@ -77,7 +77,7 @@ https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
         var svg = d3.select("body").append("svg")
             .attr("width", width + margin.right + margin.left)
             .attr("height", height + margin.top + margin.bottom)
-            .append("g")// used for x, y lengend
+            .append("g")
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
@@ -142,12 +142,12 @@ https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
-            // add the y Axis
+           
             svg.append("g")
                 .attr("id", "yaxis")
                 .call(d3.axisLeft(y));
 
-            // Animation
+           
             svg.selectAll("#amt")
                 .transition()
                 .duration(800)
