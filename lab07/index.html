@@ -179,7 +179,7 @@ var src = [];src.push(word1);src.push(word2);src.push(word3);
 		.attr("id", "path-container" + i)
 		.attr("d", names[i])
 		.transition()
-		.duration(1000)
+		.duration(1500)
 		  .attrTween("d", pathTween(line[i], 4))
 		.transition()
 		  .attrTween("d", pathTween(names[i], 4))
