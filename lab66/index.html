@@ -42,23 +42,64 @@
 <body>
 
 
-        <div id="right">
-            <div id="train-vs-test"></div>
-        </div>
+    <div id="right">
+        <div id="train-vs-test"></div>
+    </div>
 
-        <div id="left">
-            <div id="training-section">
-				<h1>
-					訓練資料集的部分
-				</h1>
-            </div>
-            <div id="testing-section">
-				<h1>
-					測試資料集的部分
-				</h1>
-            </div>
+    <div id="left">
+        <div id="training-section">
+            <h1>
+              ***COVID-19/SARS B細胞表位預測***
+              <h1>用於疫苗開發的表位預測<br><br><h1>
+                <img src="media/0.jpg" width="500" height="500">
+                <img src="media/1.jpg" width="500" height="500">
+                <img src="media/4.jpg" width="1000" height="600">
+              <h3>由未來(Future)公司發佈了Bell表位預測(Bcell epitope prediction)的數據集和樣本代碼，這是疫苗開發中的關鍵研究課題之一，可免費獲得。<br><br><br><br><br><br>此資料集是在他們的研究過程中開發的，其中包含的資料來自IEDB和UniProt。他們簡要地描述了此數據集所涵蓋的 B 細胞表位預測。<h3>
+              <h2><br><br>研究B細胞有什麼用?<h2>
+                  
+              <h4>B細胞在體內誘導抗原特異性免疫反應，通過識別抗原蛋白的亞區（表位區）產生大量抗原特異性抗體。它們可以通過將抗體與抗原蛋白結合來抑制其功能。表位區域的預測有利於旨在誘導抗原特異性抗體產生的疫苗的設計和開發。他們相信這個數據集和代碼不僅對 COVID-19 有用，而且對未來的醫療數據分析也有廣泛的用處。<h4>
+                <img src="media/2.jpg" width="1000" height="600">
+
+                <h2><br><br>數據：<h2>
+                <h3>    <br><br>關於氨基酸肽是否表現出抗體誘導活性（由活性標籤標記）的信息可以從 IEDB 獲得，IEDB 用於許多以前的研究。因此，該信息被用作標籤數據。<br><br>他們還從 IEDB 中提供的 B 細胞表位數據中獲得了表位候選氨基酸序列（肽）和活性標記數據。<br><br>所提供的抗體蛋白僅限於構成 IEDB 中記錄最多的類型的 IgG。為方便起見，他們從實驗中排除了代表同一肽的抗體活性的不同定量測量的記錄。<br><br>從 IEDB 獲得的表位數據對應於五種類型的活性：“陽性-高”、“陽性-中等”、“陽性-低”、“陽性”和“陰性”。<h3>
+                    <img src="media/5.jpg" width="500" height="500">
+                    <img src="media/6.jpg" width="500" height="500">
+                
+                 <h1><br><br>訓練資料集內容:<br><br>244筆SARS的記憶B細胞(綠色),355筆COVID19的記憶B細胞(藍色)<br><br><h1>
+                 <h1><br><br>每筆資料的屬性:<br><br><h1>
+                     <h2>1.parent_protein_id:   親本蛋白 ID<h2>
+                     <h2>2.start_position:   肽段起始位置 <h2>
+                     <h2>3.end_position:   肽的末端位置 <h2>
+                     <h2>4.chou_fasman:   肽特徵，β轉角<h2>
+                     <h2>5.emini:   肽特徵，相對表面可及性<h4>
+                     <h2>6.kolaskar_tongaonkar: 肽特徵，抗原性<h2>
+                     <h2>7.parker:肽特徵，疏水性<h2>
+                        <img src="media/7.png" width="500" height="500">
+                        <img src="media/8.png" width="500" height="500">
+                        <br><br>
+                    <img src="media/7.jpg" width="1000" height="600">
+                    
+                   
+                </h1>
         </div>
-        
+        <div id="testing-section">
+            <h1>
+                <img src="media/9.jpg" width="1000" height="600">
+                <br><br>
+                <br><br>
+                <img src="media/10.jpg" width="1000" height="600">
+                <br><br><br><br>
+                測試資料集的部分
+                <h1><br><br>測試資料集內容:<br><br>170筆SARS的記憶B細胞(綠色),230筆COVID19的記憶B細胞(藍色)<br><br><h1></h1>
+                <h1><br><br><br><br>準確率:87.3%<h1>
+                    <img src="media/11.jpg" width="1000" height="600">
+                    <img src="media/13.png" width="1000" height="600">
+                    
+                    <h1><br><br>我們的報告到此結束了~~謝謝各位聆聽.<br><br>以上由 109598048 徐雋銘 和 109598054 方佑瑋 為您呈現<h1></h1>
+                    <img src="media/12.png" width="1000" height="1500">
+            </h1>
+        </div>
+    </div>
         
         
         
@@ -66,7 +107,7 @@
         <script src="./lib/binarydecisiontree.min.js"></script>
 
         <script>
-            var Lipsum = "資料集由 10 000 個資料點組成，這些資料點儲存為行，其中 UID 列中有 14 個功能：唯一標識符範圍 從 1 到 10000 個產品 ID：包括低字母 L、M 或 H（占所有產品的 50%）、中等（30%）和高 （20%）作為產品品質變種和變種特定序列號的溫度 [K]： 使用隨機行走過程生成， 後來標準化為 2 K左右 300 K 過程溫度的標準偏差 [K]： 使用隨機行走過程正常化為 1 K 的標準偏差生成， 添加到空氣溫度加上 10 K. 旋轉速度[rpm]：從2860 W 的功率計算，覆蓋著一個正常分佈的雜訊 扭矩[Nm]：扭矩值通常分佈在 40Nm 左右，Ïmp=10Nm，並且沒有負值。工具磨損[最小]：品質變種 H/M/L 將 5/3/2 分鐘的工具磨損添加到過程中的所用工具中。和「機器故障」標籤，指示，該電腦是否在這個特定數據點失敗的任何以下故障模式是真實的。機器故障包括五種獨立故障模式工具磨損故障 （TWF）：該工具將在隨機選擇的工具磨損時間 200+ 240 分鐘（我們資料集中的 120次）之間替換故障此時，工具被替換 69 次，失敗 51 次（隨機分配）。散熱失敗 （HDF）：如果空氣和工藝溫度之間的差值低於 8.6 K，並且工具的旋轉速度低於 1380 rpm ™，則熱耗散（HDF）：熱耗散會導致過程故障。115 個數據點就是這種情況。電源故障 （PWF）：扭矩和旋轉速度（在 rad/s） 中的產品等於過程所需的功率。如果此功率低於 3500 W 或高於 9000 W，則過程失敗，我們的資料集中則有 95 次失敗。超系故障 （OSF）：如果 L 產品變種（12，000 M，13，000 H）的工具磨損和扭矩產品超過 11，000 minNm，則過程因過度勞累而失敗。98 個數據點也是如此。隨機故障（RNF）：無論其過程參數如何，每個過程都有可能出現 0.1% 的故障。只有 5 個數據點，低於我們數據集中 10，000 個數據點的預期。如果上述至少一種故障模式為真，則過程失敗，「機器故障」標籤設置為 1因此，它不透明的機器學習方法，哪些故障模式已導致過程失敗";
+            var Lipsum = "";
 
             window.onload = function () {
                 function resizeRight(){
@@ -86,12 +127,13 @@
                  * 填版面，不然全部都是白色的很單調
                  * 這兩個 section 是要讓同學放說明資料和圖片的地方
                 */
+               /*
                 d3.select("#training-section")
                     .selectAll("p")
-                    .data(d3.range(1, 10))
+                    .data(d3.range(1, 2))
                     .enter()
                     .append("p")
-                    .text(Lipsum)
+                    .text()
                 ;
 
                 d3.select("#testing-section")
@@ -99,7 +141,7 @@
                     .data(d3.range(1, 10))
                     .enter()
                     .append("p")
-                    .text(Lipsum)
+                    .text()
                 ;
 				
 				d3.select("#training-section")
@@ -122,7 +164,7 @@
                     .style('width', '350px')
                 ;
 				
-				
+				*/
 
                 var bdt = new BinaryDecisionTree({
                     el: "#train-vs-test",

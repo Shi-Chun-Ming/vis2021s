@@ -143,7 +143,7 @@ def tree_state(datasetX, datasety, clf, features, dataIndex, node_index=0, nodes
 datacsv = pd.read_csv(str(pathlib.Path.cwd())+'\\rawData.csv')
 datacsv = datacsv.fillna(0)
 labelencoder = LabelEncoder()
-datacsv['Type']= labelencoder.fit_transform(datacsv['Type'])
+datacsv['parent_protein_id']= labelencoder.fit_transform(datacsv['parent_protein_id'])
 
 columns = datacsv.columns.tolist()
 
@@ -162,7 +162,7 @@ y = data[:,0]
 
 #73分拆
 X_train, X_test, y_train, y_test, train_index, test_index = \
-    train_test_split(X,y,index,train_size=0.7)
+    train_test_split(X,y,index,train_size=0.5)
 
 clf = DecisionTreeClassifier()
 clf.fit(X_train, y_train)
